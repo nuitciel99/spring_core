@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="kr.co.jykjy.method.Magician" id="magician">
+		<property name="magicBox">
+			<bean class="kr.co.jykjy.method.MagicBoxImpl" >
+				<replaced-method name="getCount" replacer="tiger" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean class="kr.co.jykjy.method.Tiger" id="tiger" />
+</beans>

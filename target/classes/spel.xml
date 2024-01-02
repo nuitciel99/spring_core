@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<bean class="kr.co.jykjy.spel.Person" id="person" />
+	<bean class="kr.co.jykjy.spel.App" id="app">
+		<property name="person" ref="person" />
+		<!-- <property name="name" value="#{person.name}" /> -->
+		<property name="name" ref="name" />
+		<property name="age" value="20" />
+		<property name="list" ref="myList">
+			<!-- <list>
+				<value>10</value>
+				<value>20</value>
+				<value>30</value>
+			</list> -->
+		</property>
+		
+		<property name="strs">
+			<array>
+				<value>가나다라</value>
+				<value>1234</value>
+				<ref bean="name"/>
+			</array>
+		</property>
+		
+		<property name="set">
+			<set>
+				<bean class="kr.co.jykjy.spel.Person" />
+				<ref bean="person"/>			
+				<ref bean="person"/>			
+				<ref bean="person"/>			
+			</set>
+		</property>
+		
+		<property name="map">
+			<map>
+				<entry>
+					<key>
+						<ref bean="name"/>
+					</key>
+					<value>일반 텍스트</value>
+				</entry>
+				<entry key="키값" value-ref="name" />
+				<entry key="키값2" value-ref="person" />
+			</map>
+		</property>
+		
+		<property name="props">
+			<props>
+				<prop key="가">1</prop>
+				<prop key="나">2</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean class="java.lang.String" id="name">
+		<constructor-arg>
+			<value>#{person.name}</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean class="java.lang.Integer" id="i">
+		<constructor-arg value="10" />
+	</bean>
+	
+	<util:list id="myList" list-class="java.util.ArrayList">
+		<value>30</value>
+		<value>20</value>
+		<ref bean="i"/>
+	</util:list>
+</beans>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="kr.co.jykjy.ioc.OrderManager" id="orderManager">
+		<property name="maker" ref="hyundaiMaker" />
+		<property name="money" ref="money1" />
+	</bean>
+	
+	<bean class="kr.co.jykjy.ioc.HyundaiMaker" id="hyundaiMaker">
+		<property name="car" ref="car1" />
+	</bean>
+	<bean class="kr.co.jykjy.ioc.KiaMaker" id="KiaMaker"/>
+	
+	<bean class="kr.co.jykjy.ioc.Car" id="car1">
+		<property name="name" value="소나타" />
+	</bean>
+	
+	<bean class="kr.co.jykjy.ioc.Money" id="money1" scope="prototype">
+		<property name="amount" value="3000" />
+	</bean>
+</beans>

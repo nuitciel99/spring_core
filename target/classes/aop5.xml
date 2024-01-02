@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="kr.co.jykjy.mart.adv.BeforeAdv" id="beforeAdv" />
+	<bean class="kr.co.jykjy.aop5.MyDependency" id="myDependency" />
+	<bean class="kr.co.jykjy.aop5.MyBean" id="myBean">
+		<property name="myDependency" ref="myDependency" />
+	</bean>
+	
+	<bean class="kr.co.jykjy.aop5.MyBean" id="bean1">
+		<property name="myDependency" ref="pf1"></property>
+	</bean>
+	
+	<bean class="kr.co.jykjy.aop5.MyBean" id="bean2">
+		<property name="myDependency" ref="pf2"></property>
+	</bean>
+	
+	<bean class="org.springframework.aop.framework.ProxyFactoryBean" id="pf1">
+		<property name="target" ref="myDependency" />
+		<property name="interceptorNames">
+			<list>
+				<value>beforeAdv</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.aop.framework.ProxyFactoryBean" id="pf2">
+		<property name="target" ref="myDependency" />
+		<property name="interceptorNames">
+			<list>
+				<value>pointcutAdvisor</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.aop.support.DefaultPointcutAdvisor" id="pointcutAdvisor">
+		<property name="advice" ref="beforeAdv" />
+		<property name="pointcut">
+			<bean class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
+				<property name="expression" value="execution(* hello(..))"></property>
+			</bean>
+		</property>
+	</bean>
+</beans>
